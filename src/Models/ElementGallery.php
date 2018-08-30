@@ -6,6 +6,7 @@ use ATW\ElementalBase\Models\BaseElement;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\Assets\Image;
+use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
 class ElementGallery extends BaseElement
 {
@@ -35,6 +36,11 @@ class ElementGallery extends BaseElement
     {
         $this->beforeUpdateCMSFields(function (FieldList $fields) {
 //            $fields->addFieldToTab('Root.Main', $fields->fieldByName('Root.Images.Images'));
+            $config = $fields->fieldByName('Root.Images.Images')->getConfig();
+            $config->addComponent(new \Colymba\BulkUpload\BulkUploader());
+            $config->getComponentByType('Colymba\BulkUpload\BulkUploader')
+                ->setUfSetup('setFolderName', 'gallery_images');
+            $config->addComponent(new GridFieldOrderableRows('Sort'));
         });
         return parent::getCMSFields();
     }
