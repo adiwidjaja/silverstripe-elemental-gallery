@@ -1,6 +1,6 @@
 {
-  "name": "adiwidjaja/silverstripe-elemental-base",
-  "description": "Alternate elemental base",
+  "name": "adiwidjaja/silverstripe-elemental-gallery",
+  "description": "Alternate elemental gallery",
   "type": "silverstripe-vendormodule",
   "license": "BSD-3-Clause",
   "authors": [
