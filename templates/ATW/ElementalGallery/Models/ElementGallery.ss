@@ -1,4 +1,4 @@
-<section class="section section--gallery $VariantClasses">
+<section class="section section--gallery $VariantClasses" id="$Anchor">
     <section class="section_content">
         <% if $ShowTitle %>
             <h2>$Title</h2>
