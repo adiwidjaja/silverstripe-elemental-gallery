@@ -36,11 +36,13 @@ class ElementGallery extends BaseElement
     {
         $this->beforeUpdateCMSFields(function (FieldList $fields) {
 //            $fields->addFieldToTab('Root.Main', $fields->fieldByName('Root.Images.Images'));
-            $config = $fields->fieldByName('Root.Images.Images')->getConfig();
-            $config->addComponent(new \Colymba\BulkUpload\BulkUploader());
-            $config->getComponentByType('Colymba\BulkUpload\BulkUploader')
-                ->setUfSetup('setFolderName', 'gallery_images');
-            $config->addComponent(new GridFieldOrderableRows('Sort'));
+            if($imagesField = $fields->fieldByName('Root.Images.Images')) {
+                $config = $imagesField->getConfig();
+                $config->addComponent(new \Colymba\BulkUpload\BulkUploader());
+                $config->getComponentByType('Colymba\BulkUpload\BulkUploader')
+                    ->setUfSetup('setFolderName', 'gallery_images');
+                $config->addComponent(new GridFieldOrderableRows('Sort'));
+            }
         });
         return parent::getCMSFields();
     }

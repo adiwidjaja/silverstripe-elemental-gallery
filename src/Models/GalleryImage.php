@@ -21,7 +21,7 @@ class GalleryImage extends DataObject {
     ];
 
     private static $summary_fields = [
-        "CMSThumb",
+        "CMSThumbnail",
         "Title"
     ];
 
@@ -33,9 +33,9 @@ class GalleryImage extends DataObject {
 
     private static $description = 'gallery image';
 
-    public function CMSThumb() {
+    public function CMSThumbnail() {
         if($image = $this->Image())
-            return $image->Pad(100,100);
+            return $image->CMSThumbnail();
     }
 
 }
