@@ -11,6 +11,14 @@
   ],
   "require": {
     "dnadesign/silverstripe-elemental": "^3.0",
-    "colymba/gridfield-bulk-editing-tools": "^3.0"
+    "colymba/gridfield-bulk-editing-tools": "^3.0",
+    "silverstripe-elemental-base": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:adiwidjaja/silverstripe-elemental-base.git"
+    }
+  ]
   }
 }
