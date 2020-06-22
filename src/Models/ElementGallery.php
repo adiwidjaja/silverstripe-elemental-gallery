@@ -3,6 +3,12 @@
 namespace ATW\ElementalGallery\Models;
 
 use ATW\ElementalBase\Models\BaseElement;
+use Colymba\BulkUpload\BulkUploader;
+use SilverStripe\Forms\Tab;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridFieldPageCount;
+use SilverStripe\Forms\GridField\GridFieldPaginator;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\Assets\Image;
@@ -36,13 +42,36 @@ class ElementGallery extends BaseElement
     {
         $this->beforeUpdateCMSFields(function (FieldList $fields) {
 //            $fields->addFieldToTab('Root.Main', $fields->fieldByName('Root.Images.Images'));
-            if($imagesField = $fields->fieldByName('Root.Images.Images')) {
-                $config = $imagesField->getConfig();
-                $config->addComponent(new \Colymba\BulkUpload\BulkUploader());
-                $config->getComponentByType('Colymba\BulkUpload\BulkUploader')
-                    ->setUfSetup('setFolderName', 'gallery_images');
-                $config->addComponent(new GridFieldOrderableRows('Sort'));
-            }
+
+            $fields->removeByName('Images');
+
+            $config = GridFieldConfig_RecordEditor::create();
+            $config->addComponent(new GridFieldOrderableRows("Sort"));
+            $config->addComponent($uploader = new BulkUploader());
+            $uploader->setAutoPublishDataObject(true);
+            $uploader->setUfSetup('setFolderName', 'gallery_images');
+
+            $config->removeComponentsByType(GridFieldPaginator::class);
+            $config->removeComponentsByType(GridFieldPageCount::class);
+
+            $grid = new GridField(
+                'Images',
+                $this->fieldLabel('Images'),
+                $this->Images(),
+                $config
+            );
+            $fields->insertBefore(new Tab('Images'), 'Settings');
+            $fields->addFieldToTab("Root.Images", $grid);
+
+//            if($imagesField = $fields->fieldByName('Root.Images.Images')) {
+//                $config = $imagesField->getConfig();
+//                $config->addComponent(new \Colymba\BulkUpload\BulkUploader());
+//                $config->getComponentByType('Colymba\BulkUpload\BulkUploader')
+//                    ->setUfSetup('setFolderName', 'gallery_images');
+//                $config->addComponent(new GridFieldOrderableRows('Sort'));
+//
+//
+//            }
         });
         return parent::getCMSFields();
     }

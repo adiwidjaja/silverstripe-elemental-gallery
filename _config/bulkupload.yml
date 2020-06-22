@@ -1,3 +1,0 @@
-SilverStripe\Versioned\VersionedGridFieldItemRequest:
-  extensions:
-  - ATW\ElementalGallery\Extensions\VersionedGridFieldItemRequestExtension
