@@ -37,6 +37,8 @@ class ElementGallery extends BaseElement
     private static $plural_name = 'gallery elements';
 
     private static $description = 'gallery element';
+    
+    private static $inline_editable = false;
 
     public function getCMSFields()
     {
